@@ -14,7 +14,7 @@ scanner.parse_config('enable')
 # obtain image data
 pil = Image.open(argv[1]).convert('L')
 width, height = pil.size
-raw = pil.tostring()
+raw = pil.tobytes()
 
 # wrap image data
 image = zbar.Image(width, height, 'Y800', raw)
