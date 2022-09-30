@@ -91,6 +91,7 @@ static const char *xml_foot =
 static int notfound = 0, exit_code = 0;
 static int num_images = 0, num_symbols = 0;
 static int xmllvl = 0;
+static int quiet = 0;
 
 char *xmlbuf = NULL;
 unsigned xmlbuflen = 0;
@@ -168,7 +169,9 @@ static int scan_image (const char *filename)
             if(typ == ZBAR_PARTIAL)
                 continue;
             else if(!xmllvl) {
-                printf("%s:", zbar_get_symbol_name(typ));
+                if(quiet != 1) {
+                        printf("%s:", zbar_get_symbol_name(typ));
+                }
                 if(fwrite(zbar_symbol_get_data(sym),
                           zbar_symbol_get_data_length(sym),
                           1, stdout) != 1) {
@@ -256,7 +259,6 @@ static inline int parse_config (const char *cfgstr, const char *arg)
 int main (int argc, const char *argv[])
 {
     // option pre-scan
-    int quiet = 0;
     int display = 0;
     int i, j;
     for(i = 1; i < argc; i++) {
